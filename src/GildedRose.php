@@ -2,6 +2,12 @@
 
 namespace App;
 
+use App\Items\BackstageItem\BackstageItem;
+use App\Items\BrieItem\BrieItem;
+use App\Items\ConjuredItem\ConjuredItem;
+use App\Items\RegularItem\RegularItem;
+use App\Items\SulfurasItem\SulfurasItem;
+
 final class GildedRose {
 
     private $items = [];
@@ -10,53 +16,29 @@ final class GildedRose {
         $this->items = $items;
     }
 
-    public function updateQuality() {
+    public function updateQuality(): void
+    {
         foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
-                    }
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                        if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                    }
-                }
+            $itemName = $item->name;
+            switch ($itemName) {
+                case BrieItem::BRIE_ITEM_NAME:
+                    $itemClass = new BrieItem($item);
+                    break;
+                case SulfurasItem::SULFURAS_ITEM_NAME:
+                    $itemClass = new SulfurasItem($item);
+                    break;
+                case ConjuredItem::CONJURED_ITEM_NAME:
+                    $itemClass = new ConjuredItem($item);
+                    break;
+                case BackstageItem::BACKSTAGE_ITEM_NAME:
+                    $itemClass = new BackstageItem($item);
+                    break;
+                default:
+                    $itemClass = new RegularItem($item);
+                    break;
             }
-            
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
-            }
-            
-            if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
-                        }
-                    } else {
-                        $item->quality = $item->quality - $item->quality;
-                    }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
-                    }
-                }
-            }
+            $item->sell_in = $itemClass->setSellIn();
+            $item->quality = $itemClass->checkIfCanSetQuality();
         }
     }
 }

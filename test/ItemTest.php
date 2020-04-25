@@ -28,13 +28,12 @@ class ItemTest extends TestCase
         $this->assertEquals($expectedQuality, $item[0]->quality);
     }
 
+    /**
+     * @return array|array[]
+     */
     public function itemProvider(): array
     {
-        /**
-         * @todo ADD SULFURAS ITEM QUALITY CHECK TO ALWAYS BE 80
-         * @todo ADD ITEM QUALITY CHECK TO NOT BE ABOVE 50, EXCEPT SULFURAS
-         * @todo ADD CONJURED ITEMS
-         */
+
         return [
             ['REGULAR - Test assert correct values' =>
                 '+5 Dexterity Vest', 10, 20,
@@ -53,7 +52,7 @@ class ItemTest extends TestCase
                 'Sulfuras, Hand of Ragnaros', 0, 80],
             ['SULFURAS - Test case with 0 quality' =>
                 'Sulfuras, Hand of Ragnaros', -5, 0,
-                'Sulfuras, Hand of Ragnaros', -5, 0],
+                'Sulfuras, Hand of Ragnaros', -5, 80],
             ['BACKSTAGE - Test assert correct values sellIn > 10' =>
                 'Backstage passes to a TAFKAL80ETC concert', 15, 20,
                 'Backstage passes to a TAFKAL80ETC concert', 14, 21],
@@ -72,6 +71,9 @@ class ItemTest extends TestCase
             ['BACKSTAGE - Test case with 0 quality 5 sellIn' =>
                 'Backstage passes to a TAFKAL80ETC concert', 5, 0,
                 'Backstage passes to a TAFKAL80ETC concert', 4, 3],
+            ['BACKSTAGE - Test case with 50 quality 5 sellIn' =>
+                'Backstage passes to a TAFKAL80ETC concert', 5, 50,
+                'Backstage passes to a TAFKAL80ETC concert', 4, 50],
             ['BRIE - Test assert correct values' =>
                 'Aged Brie', 10, 20,
                 'Aged Brie', 9, 21],
@@ -81,6 +83,21 @@ class ItemTest extends TestCase
             ['BRIE - Test case with 0 quality' =>
                 'Aged Brie', 10, 0,
                 'Aged Brie', 9, 1],
+            ['BRIE - Test case with negative sellIn' =>
+                'Aged Brie', -5, 48,
+                'Aged Brie', -6, 50],
+            ['BRIE - Test case with 50 quality' =>
+                'Aged Brie', 10, 50,
+                'Aged Brie', 9, 50],
+            ['CONJURED - Test assert correct values' =>
+                'Conjured Mana Cake', 10, 20,
+                'Conjured Mana Cake', 9, 18],
+            ['CONJURED - Test case with 0 sellIn' =>
+                'Conjured Mana Cake', -1, 20,
+                'Conjured Mana Cake', -2, 16],
+            ['CONJURED - Test case with 0 quality' =>
+                'Conjured Mana Cake', -1, 0,
+                'Conjured Mana Cake', -2, 0],
         ];
     }
 
