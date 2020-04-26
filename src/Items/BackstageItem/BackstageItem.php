@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Items\BackstageItem;
 
@@ -10,12 +11,18 @@ class BackstageItem extends AbstractItem
     protected $lessThanOrTenDaysModifier = 2;
     protected $lessThanOrFiveDaysModifier = 3;
 
-    public function checkIfCanSetQuality()
+    /**
+     * @return int
+     */
+    public function checkIfCanSetQuality(): int
     {
         return $this->checkSellIn();
     }
 
-    protected function checkSellIn()
+    /**
+     * @return int
+     */
+    protected function checkSellIn(): int
     {
         if ($this->getSellIn() <= 10) {
             if ($this->getSellIn() <= 5) {

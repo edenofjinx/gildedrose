@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Items\SulfurasItem;
 
@@ -8,12 +9,18 @@ class SulfurasItem extends AbstractItem
 {
     protected $maximumQuality = 80;
 
-    public function checkIfCanSetQuality()
+    /**
+     * @return int
+     */
+    public function checkIfCanSetQuality(): int
     {
         return $this->maximumQuality;
     }
 
-    public function setSellIn()
+    /**
+     * @return int
+     */
+    public function setSellIn(): int
     {
        return $this->getSellIn();
     }

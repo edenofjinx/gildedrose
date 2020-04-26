@@ -1,43 +1,60 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Items;
 
-abstract class AbstractItem implements ItemInterface
+abstract class AbstractItem
 {
+    public const BRIE_ITEM_NAME = 'Aged Brie';
+    public const SULFURAS_ITEM_NAME = 'Sulfuras, Hand of Ragnaros';
+    public const BACKSTAGE_ITEM_NAME = 'Backstage passes to a TAFKAL80ETC concert';
+    public const CONJURED_ITEM_NAME = 'Conjured Mana Cake';
+    public const QUALITY_DECREASE_QTY = 1;
 
     protected $item;
     protected $updateSellInBy = 1;
     protected $maximumQuality = 50;
     protected $minimumQuality = 0;
-    protected $qualityDecrease = ItemInterface::QUALITY_DECREASE_QTY;
+    protected $qualityDecrease = self::QUALITY_DECREASE_QTY;
 
+    /**
+     * AbstractItem constructor.
+     * @param $item
+     */
     public function __construct($item)
     {
         $this->item = $item;
     }
 
-    public function getName()
-    {
-        return $this->item->name;
-    }
-
-    public function getSellIn()
+    /**
+     * @return int
+     */
+    public function getSellIn(): int
     {
         return $this->item->sell_in;
     }
 
-    public function getQuality()
+    /**
+     * @return int
+     */
+    public function getQuality(): int
     {
         return $this->item->quality;
     }
 
-    public function setSellIn()
+    /**
+     * @return int
+     */
+    public function setSellIn(): int
     {
         $this->item->sell_in = $this->getSellIn() - $this->updateSellInBy;
         return $this->item->sell_in;
     }
 
-    public function checkIfCanSetQuality()
+    /**
+     * @return int
+     */
+    public function checkIfCanSetQuality(): int
     {
         if ($this->getSellIn() < 0) {
             return $this->checkAllowedQuality($this->qualityDecrease * 2);
@@ -45,12 +62,20 @@ abstract class AbstractItem implements ItemInterface
         return $this->checkAllowedQuality($this->qualityDecrease);
     }
 
-    protected function setQuality($decrease)
+    /**
+     * @param $decrease
+     * @return int
+     */
+    protected function setQuality(int $decrease): int
     {
         return $this->getQuality() - $decrease;
     }
 
-    protected function checkAllowedQuality($decrease)
+    /**
+     * @param $decrease
+     * @return int
+     */
+    protected function checkAllowedQuality(int $decrease): int
     {
         if ($this->setQuality($decrease) > $this->maximumQuality) {
             return $this->maximumQuality;

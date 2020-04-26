@@ -1,13 +1,21 @@
 <?php
+declare(strict_types=1);
 
-namespace App\test;
+namespace TestItems;
 
 use PHPUnit\Framework\TestCase;
 use App\Item;
 use App\GildedRose;
 
-class ItemTest extends TestCase
+abstract class AbstractTestItem extends TestCase
 {
+    protected $items;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->items = $this->getProvidedData();
+    }
 
     /**
      * @dataProvider itemProvider
@@ -20,12 +28,31 @@ class ItemTest extends TestCase
      */
     public function testItems($name, $sellIn, $quality, $expectedName, $expectedSellIn, $expectedQuality): void
     {
-        $item = [new Item($name, $sellIn, $quality)];
-        $gildedRose = new GildedRose($item);
-        $gildedRose->updateQuality();
+        $item = $this->generateItem($name, $sellIn, $quality);
+        $this->updateItem($item);
         $this->assertEquals($expectedName, $item[0]->name);
         $this->assertEquals($expectedSellIn, $item[0]->sell_in);
         $this->assertEquals($expectedQuality, $item[0]->quality);
+    }
+
+    /**
+     * @param $name
+     * @param $sellIn
+     * @param $quality
+     * @return Item[]|array
+     */
+    protected function generateItem($name, $sellIn, $quality): array
+    {
+        return [new Item($name, $sellIn, $quality)];
+    }
+
+    /**
+     * @param $item
+     */
+    protected function updateItem($item): void
+    {
+        $gildedRose = new GildedRose($item);
+        $gildedRose->updateQuality();
     }
 
     /**
@@ -33,7 +60,6 @@ class ItemTest extends TestCase
      */
     public function itemProvider(): array
     {
-
         return [
             ['REGULAR - Test assert correct values' =>
                 '+5 Dexterity Vest', 10, 20,
