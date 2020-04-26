@@ -14,15 +14,30 @@ class SulfurasItemTest extends AbstractTestItem
     {
 
         return [
-            ['SULFURAS - Test assert correct values' =>
-                'Sulfuras, Hand of Ragnaros', 10, 80,
-                'Sulfuras, Hand of Ragnaros', 10, 80],
-            ['SULFURAS - Test case with 0 sellIn' =>
-                'Sulfuras, Hand of Ragnaros', 0, 80,
-                'Sulfuras, Hand of Ragnaros', 0, 80],
-            ['SULFURAS - Test case with 0 quality' =>
-                'Sulfuras, Hand of Ragnaros', -5, 0,
-                'Sulfuras, Hand of Ragnaros', -5, 80]
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 10,
+                'quality' => 80,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => 10,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 0,
+                'quality' => 80,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => 0,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => -5,
+                'quality' => 0,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => -5,
+                'expectedQuality' => 80
+            ]
         ];
     }
 

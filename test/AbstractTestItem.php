@@ -9,30 +9,24 @@ use App\GildedRose;
 
 abstract class AbstractTestItem extends TestCase
 {
-    protected $items;
+    protected $item;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->items = $this->getProvidedData();
+        $this->item = $this->getProvidedData();
     }
 
     /**
      * @dataProvider itemProvider
-     * @param $name
-     * @param $sellIn
-     * @param $quality
-     * @param $expectedName
-     * @param $expectedSellIn
-     * @param $expectedQuality
      */
-    public function testItems($name, $sellIn, $quality, $expectedName, $expectedSellIn, $expectedQuality): void
+    public function testItems(): void
     {
-        $item = $this->generateItem($name, $sellIn, $quality);
+        $item = $this->generateItem($this->item['name'], $this->item['sellIn'], $this->item['quality']);
         $this->updateItem($item);
-        $this->assertEquals($expectedName, $item[0]->name);
-        $this->assertEquals($expectedSellIn, $item[0]->sell_in);
-        $this->assertEquals($expectedQuality, $item[0]->quality);
+        $this->assertEquals($this->item['expectedName'], $item[0]->name);
+        $this->assertEquals($this->item['expectedSellIn'], $item[0]->sell_in);
+        $this->assertEquals($this->item['expectedQuality'], $item[0]->quality);
     }
 
     /**
@@ -61,69 +55,174 @@ abstract class AbstractTestItem extends TestCase
     public function itemProvider(): array
     {
         return [
-            ['REGULAR - Test assert correct values' =>
-                '+5 Dexterity Vest', 10, 20,
-                '+5 Dexterity Vest', 9, 19],
-            ['REGULAR - Test case with 0 sellIn' =>
-                '+5 Dexterity Vest', 0, 20,
-                '+5 Dexterity Vest', -1, 18],
-            ['REGULAR - Test case with 0 quality' =>
-                '+5 Dexterity Vest', -1, 0,
-                '+5 Dexterity Vest', -2, 0],
-            ['SULFURAS - Test assert correct values' =>
-                'Sulfuras, Hand of Ragnaros', 10, 80,
-                'Sulfuras, Hand of Ragnaros', 10, 80],
-            ['SULFURAS - Test case with 0 sellIn' =>
-                'Sulfuras, Hand of Ragnaros', 0, 80,
-                'Sulfuras, Hand of Ragnaros', 0, 80],
-            ['SULFURAS - Test case with 0 quality' =>
-                'Sulfuras, Hand of Ragnaros', -5, 0,
-                'Sulfuras, Hand of Ragnaros', -5, 80],
-            ['BACKSTAGE - Test assert correct values sellIn > 10' =>
-                'Backstage passes to a TAFKAL80ETC concert', 15, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 14, 21],
-            ['BACKSTAGE - Test case with 0 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 0, 20,
-                'Backstage passes to a TAFKAL80ETC concert', -1, 0],
-            ['BACKSTAGE - Test case with 1 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 1, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 0, 23],
-            ['BACKSTAGE - Test case with 10 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 10, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 9, 22],
-            ['BACKSTAGE - Test case with 0 quality 0 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 0, 0,
-                'Backstage passes to a TAFKAL80ETC concert', -1, 0],
-            ['BACKSTAGE - Test case with 0 quality 5 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 5, 0,
-                'Backstage passes to a TAFKAL80ETC concert', 4, 3],
-            ['BACKSTAGE - Test case with 50 quality 5 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 5, 50,
-                'Backstage passes to a TAFKAL80ETC concert', 4, 50],
-            ['BRIE - Test assert correct values' =>
-                'Aged Brie', 10, 20,
-                'Aged Brie', 9, 21],
-            ['BRIE - Test case with 0 sellIn' =>
-                'Aged Brie', 0, 20,
-                'Aged Brie', -1, 22],
-            ['BRIE - Test case with 0 quality' =>
-                'Aged Brie', 10, 0,
-                'Aged Brie', 9, 1],
-            ['BRIE - Test case with negative sellIn' =>
-                'Aged Brie', -5, 48,
-                'Aged Brie', -6, 50],
-            ['BRIE - Test case with 50 quality' =>
-                'Aged Brie', 10, 50,
-                'Aged Brie', 9, 50],
-            ['CONJURED - Test assert correct values' =>
-                'Conjured Mana Cake', 10, 20,
-                'Conjured Mana Cake', 9, 18],
-            ['CONJURED - Test case with 0 sellIn' =>
-                'Conjured Mana Cake', -1, 20,
-                'Conjured Mana Cake', -2, 16],
-            ['CONJURED - Test case with 0 quality' =>
-                'Conjured Mana Cake', -1, 0,
-                'Conjured Mana Cake', -2, 0],
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 19
+            ],
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 18
+            ],
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => -1,
+                'quality' => 0,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 0
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 10,
+                'quality' => 80,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => 10,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 0,
+                'quality' => 80,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => 0,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => -5,
+                'quality' => 0,
+                'expectedName' => 'Sulfuras, Hand of Ragnaros',
+                'expectedSellIn' => -5,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 15,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 14,
+                'expectedQuality' => 21
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 0
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 1,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 0,
+                'expectedQuality' => 23
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 22
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 0,
+                'quality' => 0,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 0
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 5,
+                'quality' => 0,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 4,
+                'expectedQuality' => 3
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 5,
+                'quality' => 50,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 4,
+                'expectedQuality' => 50
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 21
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 22
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 0,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 1
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => -5,
+                'quality' => 48,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => -6,
+                'expectedQuality' => 50
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 50,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 50
+            ],
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 18
+            ],
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => -1,
+                'quality' => 20,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 16
+            ],
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => -1,
+                'quality' => 0,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 0
+            ]
         ];
     }
 

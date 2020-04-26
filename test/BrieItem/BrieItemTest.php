@@ -14,21 +14,46 @@ class BrieItemTest extends AbstractTestItem
     {
 
         return [
-            ['BRIE - Test assert correct values' =>
-                'Aged Brie', 10, 20,
-                'Aged Brie', 9, 21],
-            ['BRIE - Test case with 0 sellIn' =>
-                'Aged Brie', 0, 20,
-                'Aged Brie', -1, 22],
-            ['BRIE - Test case with 0 quality' =>
-                'Aged Brie', 10, 0,
-                'Aged Brie', 9, 1],
-            ['BRIE - Test case with negative sellIn' =>
-                'Aged Brie', -5, 48,
-                'Aged Brie', -6, 50],
-            ['BRIE - Test case with 50 quality' =>
-                'Aged Brie', 10, 50,
-                'Aged Brie', 9, 50]
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 21
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 22
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 0,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 1
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => -5,
+                'quality' => 48,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => -6,
+                'expectedQuality' => 50
+            ],
+            [
+                'name' => 'Aged Brie',
+                'sellIn' => 10,
+                'quality' => 50,
+                'expectedName' => 'Aged Brie',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 50
+            ]
         ];
     }
 

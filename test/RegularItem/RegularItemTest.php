@@ -14,15 +14,30 @@ class RegularItemTest extends AbstractTestItem
     public function itemProvider(): array
     {
         return [
-            ['REGULAR - Test assert correct values' =>
-                '+5 Dexterity Vest', 10, 20,
-                '+5 Dexterity Vest', 9, 19],
-            ['REGULAR - Test case with 0 sellIn' =>
-                '+5 Dexterity Vest', 0, 20,
-                '+5 Dexterity Vest', -1, 18],
-            ['REGULAR - Test case with 0 quality' =>
-                '+5 Dexterity Vest', -1, 0,
-                '+5 Dexterity Vest', -2, 0]
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 19
+            ],
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 18
+            ],
+            [
+                'name' => '+5 Dexterity Vest',
+                'sellIn' => -1,
+                'quality' => 0,
+                'expectedName' => '+5 Dexterity Vest',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 0
+            ]
         ];
     }
 

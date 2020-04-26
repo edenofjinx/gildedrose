@@ -13,15 +13,30 @@ class ConjuredItemTest extends AbstractTestItem
     public function itemProvider(): array
     {
         return [
-            ['CONJURED - Test assert correct values' =>
-                'Conjured Mana Cake', 10, 20,
-                'Conjured Mana Cake', 9, 18],
-            ['CONJURED - Test case with 0 sellIn' =>
-                'Conjured Mana Cake', -1, 20,
-                'Conjured Mana Cake', -2, 16],
-            ['CONJURED - Test case with 0 quality' =>
-                'Conjured Mana Cake', -1, 0,
-                'Conjured Mana Cake', -2, 0]
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 18
+            ],
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => -1,
+                'quality' => 20,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 16
+            ],
+            [
+                'name' => 'Conjured Mana Cake',
+                'sellIn' => -1,
+                'quality' => 0,
+                'expectedName' => 'Conjured Mana Cake',
+                'expectedSellIn' => -2,
+                'expectedQuality' => 0
+            ]
         ];
     }
 

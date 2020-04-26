@@ -14,27 +14,62 @@ class BackstageItemTest extends AbstractTestItem
     {
 
         return [
-            ['BACKSTAGE - Test assert correct values sellIn > 10' =>
-                'Backstage passes to a TAFKAL80ETC concert', 15, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 14, 21],
-            ['BACKSTAGE - Test case with 0 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 0, 20,
-                'Backstage passes to a TAFKAL80ETC concert', -1, 0],
-            ['BACKSTAGE - Test case with 1 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 1, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 0, 23],
-            ['BACKSTAGE - Test case with 10 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 10, 20,
-                'Backstage passes to a TAFKAL80ETC concert', 9, 22],
-            ['BACKSTAGE - Test case with 0 quality 0 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 0, 0,
-                'Backstage passes to a TAFKAL80ETC concert', -1, 0],
-            ['BACKSTAGE - Test case with 0 quality 5 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 5, 0,
-                'Backstage passes to a TAFKAL80ETC concert', 4, 3],
-            ['BACKSTAGE - Test case with 50 quality 5 sellIn' =>
-                'Backstage passes to a TAFKAL80ETC concert', 5, 50,
-                'Backstage passes to a TAFKAL80ETC concert', 4, 50]
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 15,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 14,
+                'expectedQuality' => 21
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 0,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 0
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 1,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 0,
+                'expectedQuality' => 23
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 10,
+                'quality' => 20,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 9,
+                'expectedQuality' => 22
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 0,
+                'quality' => 0,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => -1,
+                'expectedQuality' => 0
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 5,
+                'quality' => 0,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 4,
+                'expectedQuality' => 3
+            ],
+            [
+                'name' => 'Backstage passes to a TAFKAL80ETC concert',
+                'sellIn' => 5,
+                'quality' => 50,
+                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
+                'expectedSellIn' => 4,
+                'expectedQuality' => 50
+            ]
         ];
     }
 
