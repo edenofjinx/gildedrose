@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Items\BackstageItem;
+namespace App\Items;
 
 use App\Items\AbstractItem;
 

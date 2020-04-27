@@ -1,12 +1,52 @@
 <?php
 declare(strict_types=1);
 
-namespace TestItems\BrieItem;
+namespace TestItems;
 
-use TestItems\AbstractTestItem;
+use App\GildedRose;
+use App\Item;
+use PHPUnit\Framework\TestCase;
 
-class BrieItemTest extends AbstractTestItem
+class BrieItemTest extends TestCase
 {
+    protected $item;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->item = $this->getProvidedData();
+    }
+
+    /**
+     * @dataProvider itemProvider
+     */
+    public function testItems(): void
+    {
+        $item = $this->generateItem($this->item['name'], $this->item['sellIn'], $this->item['quality']);
+        $this->updateItem($item);
+        $this->assertEquals($this->item['expectedSellIn'], $item[0]->sell_in);
+        $this->assertEquals($this->item['expectedQuality'], $item[0]->quality);
+    }
+
+    /**
+     * @param $name
+     * @param $sellIn
+     * @param $quality
+     * @return Item[]|array
+     */
+    protected function generateItem($name, $sellIn, $quality): array
+    {
+        return [new Item($name, $sellIn, $quality)];
+    }
+
+    /**
+     * @param $item
+     */
+    protected function updateItem($item): void
+    {
+        $gildedRose = new GildedRose($item);
+        $gildedRose->updateQuality();
+    }
     /**
      * @return array|array[]
      */
@@ -18,7 +58,6 @@ class BrieItemTest extends AbstractTestItem
                 'name' => 'Aged Brie',
                 'sellIn' => 10,
                 'quality' => 20,
-                'expectedName' => 'Aged Brie',
                 'expectedSellIn' => 9,
                 'expectedQuality' => 21
             ],
@@ -26,7 +65,6 @@ class BrieItemTest extends AbstractTestItem
                 'name' => 'Aged Brie',
                 'sellIn' => 0,
                 'quality' => 20,
-                'expectedName' => 'Aged Brie',
                 'expectedSellIn' => -1,
                 'expectedQuality' => 22
             ],
@@ -34,7 +72,6 @@ class BrieItemTest extends AbstractTestItem
                 'name' => 'Aged Brie',
                 'sellIn' => 10,
                 'quality' => 0,
-                'expectedName' => 'Aged Brie',
                 'expectedSellIn' => 9,
                 'expectedQuality' => 1
             ],
@@ -42,7 +79,6 @@ class BrieItemTest extends AbstractTestItem
                 'name' => 'Aged Brie',
                 'sellIn' => -5,
                 'quality' => 48,
-                'expectedName' => 'Aged Brie',
                 'expectedSellIn' => -6,
                 'expectedQuality' => 50
             ],
@@ -50,7 +86,6 @@ class BrieItemTest extends AbstractTestItem
                 'name' => 'Aged Brie',
                 'sellIn' => 10,
                 'quality' => 50,
-                'expectedName' => 'Aged Brie',
                 'expectedSellIn' => 9,
                 'expectedQuality' => 50
             ]

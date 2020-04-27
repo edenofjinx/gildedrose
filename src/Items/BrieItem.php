@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Items\BrieItem;
-
-use App\Items\AbstractItem;
+namespace App\Items;
 
 class BrieItem extends AbstractItem
 {

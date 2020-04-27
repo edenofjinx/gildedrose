@@ -1,0 +1,83 @@
+<?php
+declare(strict_types=1);
+
+namespace TestItems;
+
+use App\GildedRose;
+use App\Item;
+use PHPUnit\Framework\TestCase;
+
+class SulfurasItemTest extends TestCase
+{
+
+    protected $item;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->item = $this->getProvidedData();
+    }
+
+    /**
+     * @dataProvider itemProvider
+     */
+    public function testItems(): void
+    {
+        $item = $this->generateItem($this->item['name'], $this->item['sellIn'], $this->item['quality']);
+        $this->updateItem($item);
+        $this->assertEquals($this->item['expectedSellIn'], $item[0]->sell_in);
+        $this->assertEquals($this->item['expectedQuality'], $item[0]->quality);
+    }
+
+    /**
+     * @param $name
+     * @param $sellIn
+     * @param $quality
+     * @return Item[]|array
+     */
+    protected function generateItem($name, $sellIn, $quality): array
+    {
+        return [new Item($name, $sellIn, $quality)];
+    }
+
+    /**
+     * @param $item
+     */
+    protected function updateItem($item): void
+    {
+        $gildedRose = new GildedRose($item);
+        $gildedRose->updateQuality();
+    }
+
+    /**
+     * @return array|array[]
+     */
+    public function itemProvider(): array
+    {
+
+        return [
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 10,
+                'quality' => 80,
+                'expectedSellIn' => 10,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => 0,
+                'quality' => 80,
+                'expectedSellIn' => 0,
+                'expectedQuality' => 80
+            ],
+            [
+                'name' => 'Sulfuras, Hand of Ragnaros',
+                'sellIn' => -5,
+                'quality' => 0,
+                'expectedSellIn' => -5,
+                'expectedQuality' => 80
+            ]
+        ];
+    }
+
+}

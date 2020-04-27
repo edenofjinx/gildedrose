@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Items\BackstageItem\BackstageItem;
-use App\Items\BrieItem\BrieItem;
-use App\Items\ConjuredItem\ConjuredItem;
-use App\Items\RegularItem\RegularItem;
-use App\Items\SulfurasItem\SulfurasItem;
+use App\Items\BackstageItem;
+use App\Items\BrieItem;
+use App\Items\ConjuredItem;
+use App\Items\RegularItem;
+use App\Items\SulfurasItem;
 
 final class GildedRose {
 

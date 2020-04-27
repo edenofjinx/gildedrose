@@ -1,12 +1,53 @@
 <?php
 declare(strict_types=1);
 
-namespace TestItems\BackstageItem;
+namespace TestItems;
 
-use TestItems\AbstractTestItem;
+use App\GildedRose;
+use App\Item;
+use PHPUnit\Framework\TestCase;
 
-class BackstageItemTest extends AbstractTestItem
+class BackstageItemTest extends TestCase
 {
+
+    protected $item;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->item = $this->getProvidedData();
+    }
+
+    /**
+     * @dataProvider itemProvider
+     */
+    public function testItems(): void
+    {
+        $item = $this->generateItem($this->item['name'], $this->item['sellIn'], $this->item['quality']);
+        $this->updateItem($item);
+        $this->assertEquals($this->item['expectedSellIn'], $item[0]->sell_in);
+        $this->assertEquals($this->item['expectedQuality'], $item[0]->quality);
+    }
+
+    /**
+     * @param $name
+     * @param $sellIn
+     * @param $quality
+     * @return Item[]|array
+     */
+    protected function generateItem($name, $sellIn, $quality): array
+    {
+        return [new Item($name, $sellIn, $quality)];
+    }
+
+    /**
+     * @param $item
+     */
+    protected function updateItem($item): void
+    {
+        $gildedRose = new GildedRose($item);
+        $gildedRose->updateQuality();
+    }
     /**
      * @return array|array[]
      */
@@ -18,7 +59,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 15,
                 'quality' => 20,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => 14,
                 'expectedQuality' => 21
             ],
@@ -26,7 +66,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 0,
                 'quality' => 20,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => -1,
                 'expectedQuality' => 0
             ],
@@ -34,7 +73,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 1,
                 'quality' => 20,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => 0,
                 'expectedQuality' => 23
             ],
@@ -42,7 +80,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 10,
                 'quality' => 20,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => 9,
                 'expectedQuality' => 22
             ],
@@ -50,7 +87,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 0,
                 'quality' => 0,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => -1,
                 'expectedQuality' => 0
             ],
@@ -58,7 +94,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 5,
                 'quality' => 0,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => 4,
                 'expectedQuality' => 3
             ],
@@ -66,7 +101,6 @@ class BackstageItemTest extends AbstractTestItem
                 'name' => 'Backstage passes to a TAFKAL80ETC concert',
                 'sellIn' => 5,
                 'quality' => 50,
-                'expectedName' => 'Backstage passes to a TAFKAL80ETC concert',
                 'expectedSellIn' => 4,
                 'expectedQuality' => 50
             ]
